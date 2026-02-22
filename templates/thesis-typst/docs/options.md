@@ -30,11 +30,11 @@
 ## Title page options
 - `title_page_variant` (string): `simple`, `formal`, or `custom`.
 - `title_page_image` (file): Optional image on title page.
-- `title_page_image_anchor` (string): `top-right`, `top-left`, `center`, `bottom-right`, or `bottom-left`.
-- `title_page_image_width_cm` (number): Image width in cm.
-- `title_page_image_height_cm` (number): Optional image height in cm.
-- `title_page_image_dx_cm` (number): Horizontal offset in cm for placed title-page image.
-- `title_page_image_dy_cm` (number): Vertical offset in cm for placed title-page image.
+- `title_page_image_anchor` (string, optional): `top-right`, `top`, `top-left`, `center`, `bottom`, `bottom-right`, or `bottom-left`.
+- `title_page_image_width_cm` (number, optional): Image width in cm. Default is `5`.
+- `title_page_image_height_cm` (number, optional): Image height in cm. If omitted, image height is automatic.
+- `title_page_image_dx_cm` (number, optional): Horizontal offset in cm for placed title-page image. Default is `0`.
+- `title_page_image_dy_cm` (number, optional): Vertical offset in cm for placed title-page image. Default is `0`.
 - `logo` (file): Header and title-page logo path.
 
 ## Shared thesis metadata (not PDF layout options)

@@ -26,13 +26,13 @@ project:
       toc_depth: 3
       logo: config/assets/brand/logo.svg
       # Cover variant: simple | graphical | custom
-      cover_page_variant: simple
+      cover_page_variant: graphical
       cover_background_image: config/assets/brand/cover.jpg
       cover_title_box_opacity_pct: 55
       # Title-page variant: simple | formal | custom
       title_page_variant: "2"
       title_page_image: config/assets/brand/cover.jpg
-      title_page_image_anchor: top-right
+      title_page_image_anchor: bottom
       title_page_image_width_cm: 6
       title_page_image_dx_cm: -0.4
       title_page_image_dy_cm: 1.0

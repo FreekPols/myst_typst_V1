@@ -105,11 +105,11 @@
   cover_title_box_opacity_pct: [# if options.cover_title_box_opacity_pct is defined #][-options.cover_title_box_opacity_pct-][# else #]55[# endif #],
   title_page_variant: "[# if options.title_page_variant #][-options.title_page_variant-][# else #]1[# endif #]",
   title_page_image: [# if options.title_page_image #]"[-options.title_page_image-]"[# else #]none[# endif #],
-  title_page_image_anchor: "[# if options.title_page_image_anchor #][-options.title_page_image_anchor-][# else #]top-right[# endif #]",
-  title_page_image_width_cm: [# if options.title_page_image_width_cm is defined #][-options.title_page_image_width_cm-]cm[# else #]5cm[# endif #],
-  title_page_image_height_cm: [# if options.title_page_image_height_cm is defined #][-options.title_page_image_height_cm-]cm[# else #]none[# endif #],
-  title_page_image_dx_cm: [# if options.title_page_image_dx_cm is defined #][-options.title_page_image_dx_cm-]cm[# else #]0cm[# endif #],
-  title_page_image_dy_cm: [# if options.title_page_image_dy_cm is defined #][-options.title_page_image_dy_cm-]cm[# else #]0cm[# endif #],
+  title_page_image_anchor: [# if options.title_page_image_anchor is defined and options.title_page_image_anchor != none and options.title_page_image_anchor != "" #]"[-options.title_page_image_anchor-]"[# else #]none[# endif #],
+  title_page_image_width_cm: [# if options.title_page_image_width_cm is defined and options.title_page_image_width_cm != none #][-options.title_page_image_width_cm-]cm[# else #]none[# endif #],
+  title_page_image_height_cm: [# if options.title_page_image_height_cm is defined and options.title_page_image_height_cm != none #][-options.title_page_image_height_cm-]cm[# else #]none[# endif #],
+  title_page_image_dx_cm: [# if options.title_page_image_dx_cm is defined and options.title_page_image_dx_cm != none #][-options.title_page_image_dx_cm-]cm[# else #]none[# endif #],
+  title_page_image_dy_cm: [# if options.title_page_image_dy_cm is defined and options.title_page_image_dy_cm != none #][-options.title_page_image_dy_cm-]cm[# else #]none[# endif #],
 )
 
 [-IMPORTS-]

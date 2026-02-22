@@ -31,7 +31,6 @@
 }
 
 #let cover_page_simple(title, authors: ()) = {
-  pagebreak()
   align(center, text(28pt, weight: "bold", title))
   if authors != none and authors.len() > 0 {
     v(1.2em)
@@ -51,7 +50,6 @@
   if image_path == none {
     cover_page_simple(title, authors: authors)
   } else {
-    pagebreak()
     let pw = page.width
     let ph = page.height
     let opacity_pct = if box_opacity_pct < 0 {
@@ -78,17 +76,17 @@
       inset: 24pt,
       fill: color.hsv(0deg, 0%, 0%, opacity_pct * 1%),
     )[
-      text(fill: white, size: 36pt, weight: "bold", title)
+      #text(fill: white, size: 36pt, weight: "bold", title)
 
-      if subtitle != none and subtitle != "" {
-        v(0.5em)
-        text(fill: white, size: 18pt, subtitle)
-      }
+      #if subtitle != none and subtitle != "" [
+        #v(0.5em)
+        #text(fill: white, size: 18pt, subtitle)
+      ]
 
-      if author_line != "" {
-        v(1.0em)
-        text(fill: white, size: 18pt, author_line)
-      }
+      #if author_line != "" [
+        #v(1.0em)
+        #text(fill: white, size: 18pt, author_line)
+      ]
     ])
 
     if logo != none {

@@ -51,42 +51,55 @@
 }
 
 #let resolve_title_page_image_anchor(anchor) = {
-  let normalized = str(anchor)
-  if normalized == "top-right" {
+  if anchor == none {
     top + right
-  } else if normalized == "top-left" {
-    top + left
-  } else if normalized == "center" {
-    center
-  } else if normalized == "bottom-right" {
-    bottom + right
-  } else if normalized == "bottom-left" {
-    bottom + left
   } else {
-    panic("Invalid title_page_image_anchor '" + normalized + "'. Use top-right, top-left, center, bottom-right, or bottom-left.")
+    let normalized = str(anchor)
+    if normalized == "" or normalized == "none" {
+      top + right
+    } else if normalized == "top-right" {
+      top + right
+    } else if normalized == "top" {
+      top + center
+    } else if normalized == "top-left" {
+      top + left
+    } else if normalized == "center" {
+      center
+    } else if normalized == "bottom" {
+      bottom + center
+    } else if normalized == "bottom-right" {
+      bottom + right
+    } else if normalized == "bottom-left" {
+      bottom + left
+    } else {
+      panic("Invalid title_page_image_anchor '" + normalized + "'. Use top-right, top, top-left, center, bottom, bottom-right, or bottom-left.")
+    }
   }
 }
 
 #let render_title_page_image(
   image_path: none,
-  anchor: "top-right",
-  width: 5cm,
+  anchor: none,
+  width: none,
   height: none,
-  dx: 0cm,
-  dy: 0cm,
+  dx: none,
+  dy: none,
 ) = {
   if image_path != none {
+    let resolved_width = if width == none { 5cm } else { width }
+    let resolved_dx = if dx == none { 0cm } else { dx }
+    let resolved_dy = if dy == none { 0cm } else { dy }
     let placement = resolve_title_page_image_anchor(anchor)
     if height == none {
-      place(placement, dx: dx, dy: dy, image(
+      place(placement, dx: resolved_dx, dy: resolved_dy, image(
         image_path,
-        width: width,
+        width: resolved_width,
         fit: "contain",
       ))
     } else {
-      place(placement, dx: dx, dy: dy, image(
+      place(placement, dx: resolved_dx, dy: resolved_dy, image(
         image_path,
-        width: width,
+        width: resolved_width,
         height: height,
         fit: "contain",
       ))
@@ -103,11 +116,11 @@
   affiliations: (),
   date: none,
   page_image: none,
-  page_image_anchor: "top-right",
-  page_image_width: 5cm,
+  page_image_anchor: none,
+  page_image_width: none,
   page_image_height: none,
-  page_image_dx: 0cm,
-  page_image_dy: 0cm,
+  page_image_dx: none,
+  page_image_dy: none,
 ) = {
   let author_line = render_comma_list(authors)
   let affiliation_lines = render_lines(affiliations)
@@ -158,11 +171,11 @@
   supervisors: (),
   committee: (),
   page_image: none,
-  page_image_anchor: "top-right",
-  page_image_width: 5cm,
+  page_image_anchor: none,
+  page_image_width: none,
   page_image_height: none,
-  page_image_dx: 0cm,
-  page_image_dy: 0cm,
+  page_image_dx: none,
+  page_image_dy: none,
 ) = {
   let author_line = render_comma_list(authors)
   let supervisor_lines = render_lines(supervisors, fallback: "-")
@@ -234,11 +247,11 @@
   supervisors: (),
   committee: (),
   page_image: none,
-  page_image_anchor: "top-right",
-  page_image_width: 5cm,
+  page_image_anchor: none,
+  page_image_width: none,
   page_image_height: none,
-  page_image_dx: 0cm,
-  page_image_dy: 0cm,
+  page_image_dx: none,
+  page_image_dy: none,
 ) = {
   // Custom entry point: replace this with your own title-page implementation.
   title_page_formal_variant(
@@ -278,16 +291,19 @@
   committee: (),
   logo: none,
   variant: "1",
+  start_on_new_page: false,
   page_image: none,
-  page_image_anchor: "top-right",
-  page_image_width: 5cm,
+  page_image_anchor: none,
+  page_image_width: none,
   page_image_height: none,
-  page_image_dx: 0cm,
-  page_image_dy: 0cm,
+  page_image_dx: none,
+  page_image_dy: none,
 ) = {
   let mode = resolve_title_page_variant(variant)
 
-  pagebreak()
+  if start_on_new_page {
+    pagebreak()
+  }
 
   if logo != none {
     align(right, image(logo, width: 2.5cm))
@@ -352,5 +368,4 @@
     )
   }
 
-  pagebreak()
 }

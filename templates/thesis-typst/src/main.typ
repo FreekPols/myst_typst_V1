@@ -122,11 +122,11 @@
   cover_title_box_opacity_pct: 55,
   title_page_variant: "1",
   title_page_image: none,
-  title_page_image_anchor: "top-right",
-  title_page_image_width_cm: 5cm,
+  title_page_image_anchor: none,
+  title_page_image_width_cm: none,
   title_page_image_height_cm: none,
-  title_page_image_dx_cm: 0cm,
-  title_page_image_dy_cm: 0cm,
+  title_page_image_dx_cm: none,
+  title_page_image_dy_cm: none,
   body,
 ) = {
   let resolved_title = require_non_empty(title, "project.title", fallback: "Untitled Thesis")
@@ -206,6 +206,7 @@
       committee: thesis_committee,
       logo: resolved_logo_for_layout,
       variant: title_page_variant,
+      start_on_new_page: show_cover_full,
       page_image: resolved_title_page_image,
       page_image_anchor: title_page_image_anchor,
       page_image_width: title_page_image_width_cm,
