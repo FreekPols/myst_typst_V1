@@ -1,0 +1,27 @@
+version: 1
+project:
+  id: 2fb4f93c-7f15-4a31-b02b-0c4314d5ef30
+  title: A Sample Master Thesis Template
+  subtitle: Shared Metadata Across MyST and Typst
+  date: 2026-02-22
+  keywords:
+    - myst
+    - typst
+    - thesis
+  license: CC-BY-4.0
+  doi: null
+  options:
+    thesis_degree: Master of Science
+    thesis_program: Computer Science
+    thesis_faculty: Faculty of Electrical Engineering, Mathematics and Computer Science
+    thesis_institution: Delft University of Technology
+    thesis_defense_date: Friday June 19, 2026 at 10:00
+  toc:
+    - file: content/index.md
+    - file: content/chapters/01-introduction.md
+    - file: content/chapters/02-background.md
+    - file: content/chapters/03-methods.md
+    - file: content/chapters/04-results.md
+    - file: content/chapters/05-conclusion.md
+    - file: content/appendices/a-extra-data.md
+    - file: content/appendices/b-supplement.md

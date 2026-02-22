@@ -1,0 +1,104 @@
+version: 1
+extends:
+  - config/config.yml
+  - config/people.yml
+  - config/exports/typst_config.yml
+project:
+  parts:
+    abstract:
+      - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\parts\abstract.md
+    preface:
+      - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\parts\preface.md
+    acknowledgments:
+      - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\parts\acknowledgements.md
+    dedication:
+      - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\parts\dedication.md
+    colophon:
+      - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\parts\colophon.md
+  exports:
+    - id: thesis-pdf
+      format: typst
+      template: templates/thesis-typst
+      output: _build/thesis.pdf
+      show_cover_full: true
+      show_title_page: true
+      show_toc: true
+      show_list_of_figures: true
+      show_list_of_tables: true
+      frontmatter_numbering: roman
+      mainmatter_numbering: arabic
+      paper_size: a4
+      margin_top_cm: 2.5
+      margin_bottom_cm: 2.5
+      margin_left_cm: 3
+      margin_right_cm: 2
+      font_body: Libertinus Serif
+      font_mono: Consolas
+      font_size_pt: 11
+      line_spacing_em: 1.35
+      toc_depth: 3
+      logo: config/assets/brand/logo.svg
+      cover_image: config/assets/brand/cover.jpg
+      title_page_variant: '2'
+  downloads:
+    - id: thesis-pdf
+  options:
+    thesis_degree: Master of Science
+    thesis_program: Computer Science
+    thesis_faculty: Faculty of Electrical Engineering, Mathematics and Computer Science
+    thesis_institution: Delft University of Technology
+    thesis_defense_date: Friday June 19, 2026 at 10:00
+    thesis_supervisors: |
+      Prof. Dr. A. Example
+      Dr. B. Example
+    thesis_committee: |
+      Prof. Dr. C. Examiner
+      Dr. D. Examiner
+  authors:
+    - id: student
+      nameParsed:
+        literal: Jane Student
+        given: Jane
+        family: Student
+      name: Jane Student
+      affiliations:
+        - tud
+    - id: advisor
+      nameParsed:
+        literal: Alex Advisor
+        given: Alex
+        family: Advisor
+      name: Alex Advisor
+      affiliations:
+        - tud
+  affiliations:
+    - id: tud
+      name: Delft University of Technology
+      department: Department of Intelligent Systems
+      city: Delft
+      country: Netherlands
+  title: A Sample Master Thesis Template
+  subtitle: Shared Metadata Across MyST and Typst
+  keywords:
+    - myst
+    - typst
+    - thesis
+  date: '2026-02-22'
+  license: CC-BY-4.0
+  id: 2fb4f93c-7f15-4a31-b02b-0c4314d5ef30
+  toc:
+    - file: content/index.md
+    - file: content/chapters/01-introduction.md
+    - file: content/chapters/02-background.md
+    - file: content/chapters/03-methods.md
+    - file: content/chapters/04-results.md
+    - file: content/chapters/05-conclusion.md
+    - file: content/appendices/a-extra-data.md
+    - file: content/appendices/b-supplement.md
+extend:
+  - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\config\config.yml
+  - C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\config\people.yml
+  - >-
+    C:\Users\mmtop\jbos\myst_typst_V1_codex\thesis\config\exports\typst_config.yml
+site:
+  template: book-theme

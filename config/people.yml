@@ -1,0 +1,24 @@
+version: 1
+project:
+  authors:
+    - id: student
+      name: Jane Student
+      affiliations:
+        - tud
+    - id: advisor
+      name: Alex Advisor
+      affiliations:
+        - tud
+  options:
+    thesis_supervisors: |
+      Prof. Dr. A. Example
+      Dr. B. Example
+    thesis_committee: |
+      Prof. Dr. C. Examiner
+      Dr. D. Examiner
+  affiliations:
+    - id: tud
+      institution: Delft University of Technology
+      department: Department of Intelligent Systems
+      city: Delft
+      country: Netherlands

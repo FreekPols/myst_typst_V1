@@ -1,0 +1,106 @@
+jtex: v1
+kind: typst
+title: Master Thesis Typst Template for MyST
+description: A modular Typst template that consumes shared MyST metadata and parts.
+template: template.typ
+version: 0.1.0
+license: MIT
+tags:
+  - thesis
+  - typst
+  - myst
+
+files:
+  - template.typ
+  - src/main.typ
+  - src/layout/cover.typ
+  - src/layout/titlepage.typ
+  - src/layout/frontmatter.typ
+  - src/layout/toc.typ
+  - src/components/headings.typ
+  - src/components/figures.typ
+  - src/components/tables.typ
+  - src/components/bibliography.typ
+  - src/theme/page.typ
+  - src/theme/typography.typ
+  - src/theme/colors.typ
+  - src/theme/spacing.typ
+  - docs/options.md
+  - docs/metadata-mapping.md
+  - LICENSE
+
+doc:
+  - id: title
+    required: true
+  - id: subtitle
+  - id: authors
+    required: true
+  - id: affiliations
+    required: true
+  - id: date
+    required: true
+  - id: keywords
+
+parts:
+  - id: abstract
+    required: true
+  - id: preface
+  - id: acknowledgements
+  - id: dedication
+  - id: colophon
+
+options:
+  - id: show_cover_full
+    type: boolean
+  - id: show_title_page
+    type: boolean
+  - id: show_toc
+    type: boolean
+  - id: show_list_of_figures
+    type: boolean
+  - id: show_list_of_tables
+    type: boolean
+  - id: frontmatter_numbering
+    type: string
+  - id: mainmatter_numbering
+    type: string
+  - id: paper_size
+    type: string
+  - id: margin_top_cm
+    type: number
+  - id: margin_bottom_cm
+    type: number
+  - id: margin_left_cm
+    type: number
+  - id: margin_right_cm
+    type: number
+  - id: font_body
+    type: string
+  - id: font_mono
+    type: string
+  - id: font_size_pt
+    type: number
+  - id: line_spacing_em
+    type: number
+  - id: toc_depth
+    type: number
+  - id: logo
+    type: file
+  - id: cover_image
+    type: file
+  - id: title_page_variant
+    type: string
+  - id: thesis_degree
+    type: string
+  - id: thesis_program
+    type: string
+  - id: thesis_faculty
+    type: string
+  - id: thesis_institution
+    type: string
+  - id: thesis_defense_date
+    type: string
+  - id: thesis_supervisors
+    type: string
+  - id: thesis_committee
+    type: string
