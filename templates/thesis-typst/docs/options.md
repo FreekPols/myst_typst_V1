@@ -21,13 +21,24 @@
 - `line_spacing_em` (number): Paragraph leading in em.
 - `toc_depth` (number): Depth for table of contents.
 
-## Assets and title page
-- `logo` (file): Header and title-page logo path.
-- `cover_image` (file): Cover image path.
-- `title_page_variant` (number or string): `1` or `simple` for simple, `2` or `formal` for formal.
+## Cover page options
+- `cover_page_variant` (string): `simple`, `graphical`, or `custom`.
+- `cover_background_image` (file): Background image path for graphical cover.
+- `cover_title_box_opacity_pct` (number): Opacity of the graphical cover title box (0-100).
+- `cover_image` (file): Legacy alias for `cover_background_image`.
 
-## Shared thesis metadata (not options)
-These fields are semantic metadata and should be defined in shared config, not in Typst export options:
+## Title page options
+- `title_page_variant` (string): `simple`, `formal`, or `custom`.
+- `title_page_image` (file): Optional image on title page.
+- `title_page_image_anchor` (string): `top-right`, `top-left`, `center`, `bottom-right`, or `bottom-left`.
+- `title_page_image_width_cm` (number): Image width in cm.
+- `title_page_image_height_cm` (number): Optional image height in cm.
+- `title_page_image_dx_cm` (number): Horizontal offset in cm for placed title-page image.
+- `title_page_image_dy_cm` (number): Vertical offset in cm for placed title-page image.
+- `logo` (file): Header and title-page logo path.
+
+## Shared thesis metadata (not PDF layout options)
+These fields are semantic metadata and should stay in shared config:
 - `project.options.thesis_degree`
 - `project.options.thesis_program`
 - `project.options.thesis_faculty`
@@ -36,9 +47,20 @@ These fields are semantic metadata and should be defined in shared config, not i
 - `project.options.thesis_supervisors`
 - `project.options.thesis_committee`
 
-At render time, MyST injects `project.options.*` into the template `options.*` object.
+At render time, MyST injects `project.options.*` into template `options.*`.
 
-Variant behavior is implemented in `templates/thesis-typst/src/layout/titlepage.typ`.
+## Custom variant entry points
+For cover-page customization:
+1. Set `cover_page_variant: custom` in `config/exports/typst_config.yml`.
+2. Edit `templates/thesis-typst/src/layout/cover.typ`.
+3. Replace `cover_page_custom(...)` while keeping its signature stable.
+4. If you add new knobs, register them in `templates/thesis-typst/template.yml` and map them in `templates/thesis-typst/template.typ`.
+
+For title-page customization:
+1. Set `title_page_variant: custom` in `config/exports/typst_config.yml`.
+2. Edit `templates/thesis-typst/src/layout/titlepage.typ`.
+3. Replace `title_page_custom(...)` while keeping its signature stable.
+4. If you add new knobs, register them in `templates/thesis-typst/template.yml` and map them in `templates/thesis-typst/template.typ`.
 
 ## Active export config
 - Single export profile: `config/exports/typst_config.yml`.

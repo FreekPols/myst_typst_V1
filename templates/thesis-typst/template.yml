@@ -86,10 +86,29 @@ options:
     type: number
   - id: logo
     type: file
+  - id: cover_page_variant
+    type: string
+  - id: cover_background_image
+    type: file
+  - id: cover_title_box_opacity_pct
+    type: number
+  # Backward compatibility alias. Prefer cover_background_image.
   - id: cover_image
     type: file
   - id: title_page_variant
     type: string
+  - id: title_page_image
+    type: file
+  - id: title_page_image_anchor
+    type: string
+  - id: title_page_image_width_cm
+    type: number
+  - id: title_page_image_height_cm
+    type: number
+  - id: title_page_image_dx_cm
+    type: number
+  - id: title_page_image_dy_cm
+    type: number
   - id: thesis_degree
     type: string
   - id: thesis_program

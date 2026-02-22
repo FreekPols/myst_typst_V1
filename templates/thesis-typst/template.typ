@@ -100,8 +100,16 @@
 
   toc_depth: [# if options.toc_depth #][-options.toc_depth-][# else #]3[# endif #],
   logo: [# if options.logo #]"[-options.logo-]"[# else #]none[# endif #],
-  cover_image: [# if options.cover_image #]"[-options.cover_image-]"[# else #]none[# endif #],
+  cover_page_variant: "[# if options.cover_page_variant #][-options.cover_page_variant-][# else #]simple[# endif #]",
+  cover_background_image: [# if options.cover_background_image #]"[-options.cover_background_image-]"[# elif options.cover_image #]"[-options.cover_image-]"[# else #]none[# endif #],
+  cover_title_box_opacity_pct: [# if options.cover_title_box_opacity_pct is defined #][-options.cover_title_box_opacity_pct-][# else #]55[# endif #],
   title_page_variant: "[# if options.title_page_variant #][-options.title_page_variant-][# else #]1[# endif #]",
+  title_page_image: [# if options.title_page_image #]"[-options.title_page_image-]"[# else #]none[# endif #],
+  title_page_image_anchor: "[# if options.title_page_image_anchor #][-options.title_page_image_anchor-][# else #]top-right[# endif #]",
+  title_page_image_width_cm: [# if options.title_page_image_width_cm is defined #][-options.title_page_image_width_cm-]cm[# else #]5cm[# endif #],
+  title_page_image_height_cm: [# if options.title_page_image_height_cm is defined #][-options.title_page_image_height_cm-]cm[# else #]none[# endif #],
+  title_page_image_dx_cm: [# if options.title_page_image_dx_cm is defined #][-options.title_page_image_dx_cm-]cm[# else #]0cm[# endif #],
+  title_page_image_dy_cm: [# if options.title_page_image_dy_cm is defined #][-options.title_page_image_dy_cm-]cm[# else #]0cm[# endif #],
 )
 
 [-IMPORTS-]

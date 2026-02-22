@@ -35,5 +35,13 @@ Examples of PDF-only options:
 - `options.show_toc`
 - `options.paper_size`
 - `options.logo`
-- `options.cover_image`
+- `options.cover_page_variant`
+- `options.cover_background_image`
+- `options.cover_title_box_opacity_pct`
 - `options.title_page_variant`
+- `options.title_page_image`
+- `options.title_page_image_anchor`
+- `options.title_page_image_width_cm`
+- `options.title_page_image_height_cm`
+- `options.title_page_image_dx_cm`
+- `options.title_page_image_dy_cm`

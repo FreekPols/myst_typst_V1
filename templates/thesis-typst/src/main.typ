@@ -117,8 +117,16 @@
   line_spacing_em: default_line_spacing,
   toc_depth: default_toc_depth,
   logo: none,
-  cover_image: none,
+  cover_page_variant: "simple",
+  cover_background_image: none,
+  cover_title_box_opacity_pct: 55,
   title_page_variant: "1",
+  title_page_image: none,
+  title_page_image_anchor: "top-right",
+  title_page_image_width_cm: 5cm,
+  title_page_image_height_cm: none,
+  title_page_image_dx_cm: 0cm,
+  title_page_image_dy_cm: 0cm,
   body,
 ) = {
   let resolved_title = require_non_empty(title, "project.title", fallback: "Untitled Thesis")
@@ -126,7 +134,8 @@
   let main_numbering = resolve_numbering(mainmatter_numbering, default: "1")
   let resolved_logo_for_main = resolve_asset_path(logo, levels_up: 1)
   let resolved_logo_for_layout = resolve_asset_path(logo, levels_up: 2)
-  let resolved_cover_image = resolve_asset_path(cover_image, levels_up: 2)
+  let resolved_cover_background_image = resolve_asset_path(cover_background_image, levels_up: 2)
+  let resolved_title_page_image = resolve_asset_path(title_page_image, levels_up: 2)
 
   set page(
     paper: paper_size,
@@ -162,7 +171,22 @@
       resolved_title,
       subtitle: subtitle,
       authors: authors,
-      image_path: resolved_cover_image,
+      variant: cover_page_variant,
+      image_path: resolved_cover_background_image,
+      box_opacity_pct: cover_title_box_opacity_pct,
+      institution_line: thesis_institution,
+      logo: resolved_logo_for_layout,
+    )
+    set page(
+      paper: paper_size,
+      margin: (
+        top: margin_top_cm,
+        bottom: margin_bottom_cm,
+        left: margin_left_cm,
+        right: margin_right_cm,
+      ),
+      numbering: front_numbering,
+      background: none,
     )
   }
 
@@ -182,6 +206,12 @@
       committee: thesis_committee,
       logo: resolved_logo_for_layout,
       variant: title_page_variant,
+      page_image: resolved_title_page_image,
+      page_image_anchor: title_page_image_anchor,
+      page_image_width: title_page_image_width_cm,
+      page_image_height: title_page_image_height_cm,
+      page_image_dx: title_page_image_dx_cm,
+      page_image_dy: title_page_image_dy_cm,
     )
   }
 
