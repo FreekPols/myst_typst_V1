@@ -15,7 +15,7 @@ project:
       name: Prof. Dr. C. Examiner
       affiliations:
         - tud
-    - id: supervisor-2
+    - id: committee-2
       name: Dr. D. Examiner
       affiliations:
         - tud

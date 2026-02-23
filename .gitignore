@@ -1,5 +1,6 @@
-﻿# Build outputs
+# Build outputs
 _build/
+exports/*.pdf
 
 # MyST cache/state
 .myst/
@@ -19,6 +20,3 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
-
-# MyST build outputs
-_build

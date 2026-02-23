@@ -6,7 +6,7 @@ project:
     - id: thesis-pdf
       format: typst
       template: templates/thesis-typst
-      output: _build/thesis.pdf
+      output: ./exports/plain_typst_book.pdf
       show_cover_full: true
       show_title_page: true
       show_title_page_image: false

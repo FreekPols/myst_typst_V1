@@ -19,6 +19,7 @@ project:
   #   - thesis
   license: CC-BY-4.0
   doi: null
+
   toc:
     - file: content/index.md
     - file: content/chapters/01-introduction.md
@@ -31,3 +32,15 @@ project:
 
 site:
   template: book-theme
+  options:
+    style: https://github.com/TUD-JB-Templates/JB2_plugins/releases/download/CSS/custom.css
+  #   favicon: favicon.ico
+    # logo: logo.svg
+
+  actions:
+    - title: GitHub Repo
+      url: https://github.com/myst-templates/plain_typst_book
+    - title: Feedback
+      url: https://github.com/myst-templates/plain_typst_book/issues
+    - title: Download PDF
+      url: ./exports/plain_typst_book.pdf
