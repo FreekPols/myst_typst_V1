@@ -31,11 +31,18 @@
 }
 
 #let cover_page_simple(title, authors: ()) = {
-  align(center, text(28pt, weight: "bold", title))
-  if authors != none and authors.len() > 0 {
-    v(1.2em)
-    align(center, text(11pt, render_comma_list(authors)))
-  }
+  set page(numbering: none)
+  let author_line = render_comma_list(authors)
+  v(12%)
+  align(left, [
+    #text(size: 40pt, weight: "bold", title)
+    #v(0.7em)
+    #line(length: 55%, stroke: 1.2pt + rgb("#666666"))
+    #if author_line != "" [
+      #v(1.0em)
+      #text(size: 16pt, weight: "medium", author_line)
+    ]
+  ])
 }
 
 #let cover_page_graphical(

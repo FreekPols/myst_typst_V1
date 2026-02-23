@@ -3,6 +3,8 @@
 ## Layout options
 - `show_cover_full` (boolean): Render a cover page.
 - `show_title_page` (boolean): Render a title page.
+- `show_title_page_image` (boolean): Enable or disable title-page image rendering.
+- `show_contributor_affiliations` (boolean): Show supervisor/committee affiliations on the title page (dark gray italic line under each name).
 - `show_toc` (boolean): Render the table of contents.
 - `show_list_of_figures` (boolean): Render list of figures.
 - `show_list_of_tables` (boolean): Render list of tables.
@@ -44,8 +46,8 @@ These fields are semantic metadata and should stay in shared config:
 - `project.options.thesis_faculty`
 - `project.options.thesis_institution`
 - `project.options.thesis_defense_date`
-- `project.options.thesis_supervisors`
-- `project.options.thesis_committee`
+- `project.authors` (students only)
+- `project.contributors` (supervisors/committee keyed by contributor `id` prefix, recommended: `supervisor-1`, `committee-1`, ...)
 
 At render time, MyST injects `project.options.*` into template `options.*`.
 

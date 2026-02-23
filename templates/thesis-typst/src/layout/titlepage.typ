@@ -46,6 +46,52 @@
   }
 }
 
+#let render_contributor_entries(entries, show_affiliations: true) = {
+  if entries == none {
+    none
+  } else if type(entries) == str {
+    if entries == "" {
+      none
+    } else {
+      [#entries]
+    }
+  } else if entries.len() == 0 {
+    none
+  } else {
+    let rows = ()
+    for entry in entries {
+      let name = if type(entry) == str {
+        str(entry)
+      } else if entry.name == none {
+        ""
+      } else {
+        str(entry.name)
+      }
+      let affiliation = if type(entry) == str {
+        none
+      } else {
+        entry.affiliation
+      }
+      if name != "" {
+        if show_affiliations and affiliation != none and str(affiliation) != "" {
+          rows += ([
+            #name
+            #linebreak()
+            #text(size: 9pt, style: "italic", fill: rgb("#555555"), str(affiliation))
+          ],)
+        } else {
+          rows += ([#name],)
+        }
+      }
+    }
+    if rows.len() == 0 {
+      none
+    } else {
+      stack(dir: ttb, spacing: 0.6em, ..rows)
+    }
+  }
+}
+
 #let resolve_title_page_variant(variant) = {
   // Supported variants: "1"/"simple", "2"/"formal", and "3"/"custom".
   let normalized = str(variant)
@@ -180,6 +226,7 @@
   defense_date: none,
   supervisors: (),
   committee: (),
+  show_contributor_affiliations: true,
   page_image: none,
   page_image_anchor: none,
   page_image_width: none,
@@ -188,8 +235,14 @@
   page_image_dy: none,
 ) = {
   let author_line = render_comma_list(authors)
-  let supervisor_lines = render_lines(supervisors)
-  let committee_lines = render_lines(committee)
+  let supervisor_cell = render_contributor_entries(
+    supervisors,
+    show_affiliations: show_contributor_affiliations,
+  )
+  let committee_cell = render_contributor_entries(
+    committee,
+    show_affiliations: show_contributor_affiliations,
+  )
   let resolved_defense_date = if defense_date != none and defense_date != "" { defense_date } else { none }
   let resolved_date = if date != none and date != "" { date } else { none }
   let author_label = if count_items(authors) > 1 { "Authors" } else { "Author" }
@@ -198,14 +251,14 @@
   let info_cells = (
     author_label, author_line,
   ) + (
-    if supervisor_lines != "" {
-      (supervisor_label, supervisor_lines,)
+    if supervisor_cell != none {
+      (supervisor_label, supervisor_cell,)
     } else {
       ()
     }
   ) + (
-    if committee_lines != "" {
-      (committee_label, committee_lines,)
+    if committee_cell != none {
+      (committee_label, committee_cell,)
     } else {
       ()
     }
@@ -282,6 +335,7 @@
   defense_date: none,
   supervisors: (),
   committee: (),
+  show_contributor_affiliations: true,
   page_image: none,
   page_image_anchor: none,
   page_image_width: none,
@@ -303,6 +357,7 @@
     defense_date: defense_date,
     supervisors: supervisors,
     committee: committee,
+    show_contributor_affiliations: show_contributor_affiliations,
     page_image: page_image,
     page_image_anchor: page_image_anchor,
     page_image_width: page_image_width,
@@ -325,6 +380,7 @@
   defense_date: none,
   supervisors: (),
   committee: (),
+  show_contributor_affiliations: true,
   logo: none,
   variant: "1",
   start_on_new_page: false,
@@ -374,6 +430,7 @@
       defense_date: defense_date,
       supervisors: supervisors,
       committee: committee,
+      show_contributor_affiliations: show_contributor_affiliations,
       page_image: page_image,
       page_image_anchor: page_image_anchor,
       page_image_width: page_image_width,
@@ -395,6 +452,7 @@
       defense_date: defense_date,
       supervisors: supervisors,
       committee: committee,
+      show_contributor_affiliations: show_contributor_affiliations,
       page_image: page_image,
       page_image_anchor: page_image_anchor,
       page_image_width: page_image_width,

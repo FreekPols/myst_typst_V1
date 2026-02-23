@@ -5,7 +5,9 @@ This template keeps semantic metadata in shared MyST config files and maps those
 ## Shared keys to template arguments
 - `project.title` -> `title`
 - `project.subtitle` -> `subtitle`
-- `project.authors` (fallback `doc.authors`) -> `authors`
+- `project.authors` (fallback `doc.authors`) -> `authors` (students shown on cover/title author line)
+- `project.contributors` (fallback `doc.contributors`) -> `contributors`
+- `project.affiliations` (fallback `doc.affiliations`) -> `affiliation_catalog` (for contributor affiliation resolution)
 - `project.affiliations` (fallback `doc.affiliations`) -> `affiliations`
 - `project.date` (fallback `doc.date`) -> `date`
 - `project.keywords` (fallback `doc.keywords`) -> `keywords`
@@ -14,8 +16,9 @@ This template keeps semantic metadata in shared MyST config files and maps those
 - `project.options.thesis_faculty` -> `options.thesis_faculty` -> `thesis_faculty`
 - `project.options.thesis_institution` -> `options.thesis_institution` -> `thesis_institution`
 - `project.options.thesis_defense_date` -> `options.thesis_defense_date` -> `thesis_defense_date`
-- `project.options.thesis_supervisors` -> `options.thesis_supervisors` -> `thesis_supervisors`
-- `project.options.thesis_committee` -> `options.thesis_committee` -> `thesis_committee`
+- `project.contributors[*].id` matching `supervisor*` or `advisor*` -> title page supervisor row
+- `project.contributors[*].id` matching `committee*` or `examiner*` -> title page committee row
+- `project.contributors[*].affiliations[*]` + `project.affiliations[*]` -> contributor affiliation line under each supervisor/committee name
 
 ## Parts to template arguments
 - `parts.abstract` -> `abstract`
@@ -32,6 +35,8 @@ All PDF-only options are read from `config/exports/typst_config.yml` and mapped 
 Examples of PDF-only options:
 - `options.show_cover_full`
 - `options.show_title_page`
+- `options.show_title_page_image`
+- `options.show_contributor_affiliations`
 - `options.show_toc`
 - `options.paper_size`
 - `options.logo`

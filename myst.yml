@@ -1,9 +1,10 @@
 version: 1
 extends:
   - config/people.yml
+  - config/options.yml
   - config/exports/typst_config.yml
 project:
-  title: Master Thesis 
+  title: Master Thesis
   subtitle: Shared Template for MyST and Typst
   date: 2026-02-22
   parts:
@@ -18,12 +19,6 @@ project:
   #   - thesis
   license: CC-BY-4.0
   doi: null
-  options:
-    thesis_degree: Master of Science
-    thesis_program: Applied Physics
-    thesis_faculty: Faculty of Applied Sciences
-    thesis_institution: Delft University of Technology
-    thesis_defense_date: Friday June 19, 2026 at 10:00
   toc:
     - file: content/index.md
     - file: content/chapters/01-introduction.md
@@ -33,5 +28,6 @@ project:
     - file: content/chapters/05-conclusion.md
     - file: content/appendices/a-extra-data.md
     - file: content/appendices/b-supplement.md
+
 site:
   template: book-theme

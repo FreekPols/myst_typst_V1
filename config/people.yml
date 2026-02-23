@@ -5,8 +5,18 @@ project:
       name: Maciej Topyla
       affiliations:
         - tud
-    - id: advisor
+
+  contributors:
+    - id: supervisor-1
       name: Freek Pols
+      affiliations:
+        - tud
+    - id: committee-1
+      name: Prof. Dr. C. Examiner
+      affiliations:
+        - tud
+    - id: supervisor-2
+      name: Dr. D. Examiner
       affiliations:
         - tud
 
@@ -15,11 +25,3 @@ project:
       institution: Delft University of Technology
       #city: Delft
       #country: Netherlands
-
-  options:
-    thesis_supervisors: |
-      Prof. Dr. A. Example
-      Dr. B. Example
-    thesis_committee: |
-      Prof. Dr. C. Examiner
-      Dr. D. Examiner

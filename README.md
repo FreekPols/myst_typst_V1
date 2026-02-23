@@ -6,8 +6,8 @@ This project keeps one shared metadata source for MyST and Typst while isolating
 - Single profile build: `myst build --typst`
 
 ## Shared vs PDF-only configuration
-- Shared semantics: `config/config.yml`, `config/people.yml`, and `parts/*.md`
-- Thesis semantic fields live under `project.options.thesis_*` in shared config.
+- Shared semantics: `config/config.yml`, `config/people.yml`, and `content/parts/*.md`
+- Thesis semantic fields live under `project.options.thesis_*`; people are in `project.authors` (students) and `project.contributors` (use `supervisor-*` / `committee-*` IDs).
 - PDF layout knobs: `config/exports/typst_config.yml`
 - Cover options are split from title-page options (`cover_background_image` vs `title_page_image`).
 - Variant entry points exist in `templates/thesis-typst/src/layout/cover.typ` and `templates/thesis-typst/src/layout/titlepage.typ`.

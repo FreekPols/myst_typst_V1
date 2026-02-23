@@ -80,38 +80,77 @@
   }
 }
 
-#let normalize_role_id(value) = {
-  if value == none {
-    ""
-  } else {
-    str(value)
-  }
-}
-
-#let role_matches(author_id, role) = {
-  let id = normalize_role_id(author_id)
-  if role == "student" {
-    id == "student" or id.starts-with("student")
-  } else if role == "supervisor" {
-    id == "advisor" or id.starts-with("advisor") or id == "supervisor" or id.starts-with("supervisor")
-  } else if role == "committee" {
-    id == "committee" or id.starts-with("committee") or id == "examiner" or id.starts-with("examiner")
+#let contributor_group_matches(contributor_id, group) = {
+  let normalized = if contributor_id == none { "" } else { str(contributor_id) }
+  if group == "supervisor" {
+    normalized == "supervisor" or normalized.starts-with("supervisor") or normalized == "advisor" or normalized.starts-with("advisor")
+  } else if group == "committee" {
+    normalized == "committee" or normalized.starts-with("committee") or normalized == "examiner" or normalized.starts-with("examiner")
   } else {
     false
   }
 }
 
-#let names_by_role(people, role) = {
-  if people == none or type(people) == str {
+#let resolve_affiliation_name(affiliation_id, affiliation_catalog) = {
+  let requested_id = if affiliation_id == none { "" } else { str(affiliation_id) }
+  if requested_id == "" or affiliation_catalog == none or type(affiliation_catalog) == str {
+    none
+  } else {
+    let result = none
+    for item in affiliation_catalog {
+      if type(item) != str {
+        let item_id = if item.id == none { "" } else { str(item.id) }
+        if item_id == requested_id {
+          result = if item.name == none { none } else { str(item.name) }
+        }
+      }
+    }
+    result
+  }
+}
+
+#let resolve_affiliation_line(affiliation_ids, affiliation_catalog) = {
+  if affiliation_ids == none {
+    none
+  } else if type(affiliation_ids) == str {
+    let direct = str(affiliation_ids)
+    if direct == "" {
+      none
+    } else {
+      let resolved = resolve_affiliation_name(direct, affiliation_catalog)
+      if resolved == none { direct } else { resolved }
+    }
+  } else {
+    let names = ()
+    for aff_id in affiliation_ids {
+      let aff_name = resolve_affiliation_name(aff_id, affiliation_catalog)
+      if aff_name != none and aff_name != "" {
+        names += (aff_name,)
+      } else if aff_id != none and str(aff_id) != "" {
+        names += (str(aff_id),)
+      }
+    }
+    let rendered = render_comma_list(names)
+    if rendered == "" { none } else { rendered }
+  }
+}
+
+#let contributors_by_group(contributors, group, affiliation_catalog) = {
+  if contributors == none or type(contributors) == str {
     ()
   } else {
     let output = ()
-    for person in people {
-      let person_id = if type(person) == str { person } else { person.id }
-      let person_name = if type(person) == str { person } else { person.name }
-      let resolved_name = str(person_name)
-      if role_matches(person_id, role) and resolved_name != "" {
-        output += (resolved_name,)
+    for contributor in contributors {
+      if type(contributor) != str {
+        let contributor_id = if contributor.id == none { "" } else { str(contributor.id) }
+        let name = if contributor.name == none { "" } else { str(contributor.name) }
+        if name != "" and contributor_group_matches(contributor_id, group) {
+          let affiliation = resolve_affiliation_line(contributor.affiliations, affiliation_catalog)
+          output += ((
+            name: name,
+            affiliation: affiliation,
+          ),)
+        }
       }
     }
     output
@@ -122,7 +161,8 @@
   title: "Untitled Thesis",
   subtitle: none,
   authors: (),
-  people: (),
+  contributors: (),
+  affiliation_catalog: (),
   affiliations: (),
   date: none,
   keywords: (),
@@ -131,8 +171,6 @@
   thesis_faculty: none,
   thesis_institution: none,
   thesis_defense_date: none,
-  thesis_supervisors: none,
-  thesis_committee: none,
   abstract: none,
   preface: none,
   acknowledgements: none,
@@ -140,6 +178,8 @@
   colophon: none,
   show_cover_full: true,
   show_title_page: true,
+  show_title_page_image: true,
+  show_contributor_affiliations: true,
   show_toc: true,
   show_list_of_figures: false,
   show_list_of_tables: false,
@@ -169,19 +209,18 @@
   body,
 ) = {
   let resolved_title = require_non_empty(title, "project.title", fallback: "Untitled Thesis")
-  let student_names = names_by_role(people, "student")
-  let supervisor_names = names_by_role(people, "supervisor")
-  let committee_names = names_by_role(people, "committee")
-  let resolved_cover_authors = if student_names.len() > 0 { student_names } else { authors }
-  let resolved_title_authors = if student_names.len() > 0 { student_names } else { authors }
-  let resolved_supervisors = if supervisor_names.len() > 0 { supervisor_names } else { thesis_supervisors }
-  let resolved_committee = if committee_names.len() > 0 { committee_names } else { thesis_committee }
+  let resolved_supervisors = contributors_by_group(contributors, "supervisor", affiliation_catalog)
+  let resolved_committee = contributors_by_group(contributors, "committee", affiliation_catalog)
   let front_numbering = resolve_numbering(frontmatter_numbering, default: "i")
   let main_numbering = resolve_numbering(mainmatter_numbering, default: "1")
   let resolved_logo_for_main = resolve_asset_path(logo, levels_up: 1)
   let resolved_logo_for_layout = resolve_asset_path(logo, levels_up: 2)
   let resolved_cover_background_image = resolve_asset_path(cover_background_image, levels_up: 2)
-  let resolved_title_page_image = resolve_asset_path(title_page_image, levels_up: 2)
+  let resolved_title_page_image = if show_title_page_image {
+    resolve_asset_path(title_page_image, levels_up: 2)
+  } else {
+    none
+  }
 
   set page(
     paper: paper_size,
@@ -216,7 +255,7 @@
     cover_page(
       resolved_title,
       subtitle: subtitle,
-      authors: resolved_cover_authors,
+      authors: authors,
       variant: cover_page_variant,
       image_path: resolved_cover_background_image,
       box_opacity_pct: cover_title_box_opacity_pct,
@@ -240,7 +279,7 @@
     title_page(
       resolved_title,
       subtitle: subtitle,
-      authors: resolved_title_authors,
+      authors: authors,
       affiliations: affiliations,
       date: date,
       degree: thesis_degree,
@@ -250,6 +289,7 @@
       defense_date: thesis_defense_date,
       supervisors: resolved_supervisors,
       committee: resolved_committee,
+      show_contributor_affiliations: show_contributor_affiliations,
       logo: resolved_logo_for_layout,
       variant: title_page_variant,
       start_on_new_page: show_cover_full,
