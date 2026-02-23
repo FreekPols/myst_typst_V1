@@ -30,6 +30,24 @@
 [# endif #]
   ),
 
+  people: (
+[# if project.authors #]
+[# for author in project.authors #]
+    (
+      id: "[# if author.id #][-author.id-][# else #][# endif #]",
+      name: "[# if author.name #][-author.name-][# else #][-author-][# endif #]",
+    ),
+[# endfor #]
+[# elif doc.authors #]
+[# for author in doc.authors #]
+    (
+      id: "[# if author.id #][-author.id-][# else #][# endif #]",
+      name: "[# if author.name #][-author.name-][# else #][-author-][# endif #]",
+    ),
+[# endfor #]
+[# endif #]
+  ),
+
   affiliations: (
 [# if project.affiliations #]
 [# for aff in project.affiliations #]

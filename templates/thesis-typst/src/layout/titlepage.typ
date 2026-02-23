@@ -36,6 +36,16 @@
   }
 }
 
+#let count_items(items) = {
+  if items == none {
+    0
+  } else if type(items) == str {
+    if items == "" { 0 } else { 1 }
+  } else {
+    items.len()
+  }
+}
+
 #let resolve_title_page_variant(variant) = {
   // Supported variants: "1"/"simple", "2"/"formal", and "3"/"custom".
   let normalized = str(variant)
@@ -178,10 +188,40 @@
   page_image_dy: none,
 ) = {
   let author_line = render_comma_list(authors)
-  let supervisor_lines = render_lines(supervisors, fallback: "-")
-  let committee_lines = render_lines(committee, fallback: "-")
-  let resolved_defense_date = if defense_date != none and defense_date != "" { defense_date } else { "-" }
-  let resolved_date = if date != none and date != "" { date } else { "-" }
+  let supervisor_lines = render_lines(supervisors)
+  let committee_lines = render_lines(committee)
+  let resolved_defense_date = if defense_date != none and defense_date != "" { defense_date } else { none }
+  let resolved_date = if date != none and date != "" { date } else { none }
+  let author_label = if count_items(authors) > 1 { "Authors" } else { "Author" }
+  let supervisor_label = if count_items(supervisors) > 1 { "Supervisors" } else { "Supervisor" }
+  let committee_label = if count_items(committee) > 1 { "Committee Members" } else { "Committee Member" }
+  let info_cells = (
+    author_label, author_line,
+  ) + (
+    if supervisor_lines != "" {
+      (supervisor_label, supervisor_lines,)
+    } else {
+      ()
+    }
+  ) + (
+    if committee_lines != "" {
+      (committee_label, committee_lines,)
+    } else {
+      ()
+    }
+  ) + (
+    if resolved_defense_date != none {
+      ("Defense date", resolved_defense_date,)
+    } else {
+      ()
+    }
+  ) + (
+    if resolved_date != none {
+      ("Date", resolved_date,)
+    } else {
+      ()
+    }
+  )
 
   render_title_page_image(
     image_path: page_image,
@@ -225,11 +265,7 @@
     columns: (auto, 1fr),
     align: (left, left),
     stroke: none,
-    "Author(s)", author_line,
-    "Supervisor(s)", supervisor_lines,
-    "Committee", committee_lines,
-    "Defense date", resolved_defense_date,
-    "Date", resolved_date,
+    ..info_cells,
   )
 }
 

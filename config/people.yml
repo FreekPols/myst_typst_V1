@@ -2,13 +2,20 @@ version: 1
 project:
   authors:
     - id: student
-      name: Jane Student
+      name: Maciej Topyla
       affiliations:
         - tud
     - id: advisor
-      name: Alex Advisor
+      name: Freek Pols
       affiliations:
         - tud
+
+  affiliations:
+    - id: tud
+      institution: Delft University of Technology
+      #city: Delft
+      #country: Netherlands
+
   options:
     thesis_supervisors: |
       Prof. Dr. A. Example
@@ -16,9 +23,3 @@ project:
     thesis_committee: |
       Prof. Dr. C. Examiner
       Dr. D. Examiner
-  affiliations:
-    - id: tud
-      institution: Delft University of Technology
-      department: Department of Intelligent Systems
-      city: Delft
-      country: Netherlands

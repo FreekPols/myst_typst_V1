@@ -80,10 +80,49 @@
   }
 }
 
+#let normalize_role_id(value) = {
+  if value == none {
+    ""
+  } else {
+    str(value)
+  }
+}
+
+#let role_matches(author_id, role) = {
+  let id = normalize_role_id(author_id)
+  if role == "student" {
+    id == "student" or id.starts-with("student")
+  } else if role == "supervisor" {
+    id == "advisor" or id.starts-with("advisor") or id == "supervisor" or id.starts-with("supervisor")
+  } else if role == "committee" {
+    id == "committee" or id.starts-with("committee") or id == "examiner" or id.starts-with("examiner")
+  } else {
+    false
+  }
+}
+
+#let names_by_role(people, role) = {
+  if people == none or type(people) == str {
+    ()
+  } else {
+    let output = ()
+    for person in people {
+      let person_id = if type(person) == str { person } else { person.id }
+      let person_name = if type(person) == str { person } else { person.name }
+      let resolved_name = str(person_name)
+      if role_matches(person_id, role) and resolved_name != "" {
+        output += (resolved_name,)
+      }
+    }
+    output
+  }
+}
+
 #let thesis_template(
   title: "Untitled Thesis",
   subtitle: none,
   authors: (),
+  people: (),
   affiliations: (),
   date: none,
   keywords: (),
@@ -130,6 +169,13 @@
   body,
 ) = {
   let resolved_title = require_non_empty(title, "project.title", fallback: "Untitled Thesis")
+  let student_names = names_by_role(people, "student")
+  let supervisor_names = names_by_role(people, "supervisor")
+  let committee_names = names_by_role(people, "committee")
+  let resolved_cover_authors = if student_names.len() > 0 { student_names } else { authors }
+  let resolved_title_authors = if student_names.len() > 0 { student_names } else { authors }
+  let resolved_supervisors = if supervisor_names.len() > 0 { supervisor_names } else { thesis_supervisors }
+  let resolved_committee = if committee_names.len() > 0 { committee_names } else { thesis_committee }
   let front_numbering = resolve_numbering(frontmatter_numbering, default: "i")
   let main_numbering = resolve_numbering(mainmatter_numbering, default: "1")
   let resolved_logo_for_main = resolve_asset_path(logo, levels_up: 1)
@@ -170,7 +216,7 @@
     cover_page(
       resolved_title,
       subtitle: subtitle,
-      authors: authors,
+      authors: resolved_cover_authors,
       variant: cover_page_variant,
       image_path: resolved_cover_background_image,
       box_opacity_pct: cover_title_box_opacity_pct,
@@ -194,7 +240,7 @@
     title_page(
       resolved_title,
       subtitle: subtitle,
-      authors: authors,
+      authors: resolved_title_authors,
       affiliations: affiliations,
       date: date,
       degree: thesis_degree,
@@ -202,8 +248,8 @@
       faculty: thesis_faculty,
       institution: thesis_institution,
       defense_date: thesis_defense_date,
-      supervisors: thesis_supervisors,
-      committee: thesis_committee,
+      supervisors: resolved_supervisors,
+      committee: resolved_committee,
       logo: resolved_logo_for_layout,
       variant: title_page_variant,
       start_on_new_page: show_cover_full,
