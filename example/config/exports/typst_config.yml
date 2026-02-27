@@ -5,7 +5,7 @@ project:
   exports:
     - id: thesis-pdf
       format: typst
-      template: templates/thesis-typst
+      template: ../
       output: ./exports/thesis_typst.pdf
       show_cover_full: true
       show_title_page: true
@@ -30,10 +30,12 @@ project:
       
       toc_depth: 3
       logo: config/assets/brand/logo.svg
+
       # Cover variant: simple | graphical | custom
       cover_page_variant: graphical
       cover_background_image: config/assets/figures/cover.jpg
       cover_title_box_opacity_pct: 55
+      
       # Title-page variant: simple | formal | custom
       title_page_variant: "formal"
       title_page_image: config/assets/figures/cover.jpg
