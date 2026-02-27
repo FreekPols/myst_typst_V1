@@ -1,5 +1,5 @@
 #import "src/main.typ": thesis_template
-#import "src/components/bibliography.typ": render_bibliography
+// #import "src/components/bibliography.typ": render_bibliography
 
 #show: thesis_template.with(
 [# if project.title #]
@@ -158,12 +158,17 @@
   title_page_image_height_cm: [# if options.title_page_image_height_cm is defined and options.title_page_image_height_cm != none #][-options.title_page_image_height_cm-]cm[# else #]none[# endif #],
   title_page_image_dx_cm: [# if options.title_page_image_dx_cm is defined and options.title_page_image_dx_cm != none #][-options.title_page_image_dx_cm-]cm[# else #]none[# endif #],
   title_page_image_dy_cm: [# if options.title_page_image_dy_cm is defined and options.title_page_image_dy_cm != none #][-options.title_page_image_dy_cm-]cm[# else #]none[# endif #],
+
+  [# if doc.bibtex #]
+  bibliography-file: "[-doc.bibtex-]",
+  [# endif #]
 )
+
 
 [-IMPORTS-]
 
 [-CONTENT-]
 
-[# if doc.bibtex #]
-#render_bibliography(path: "[-doc.bibtex-]")
-[# endif #]
+// [# if doc.bibtex #]
+// #render_bibliography(path: "[-doc.bibtex-]")
+// [# endif #]
