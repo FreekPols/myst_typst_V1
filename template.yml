@@ -20,7 +20,7 @@ files:
   - src/components/headings.typ
   - src/components/figures.typ
   - src/components/tables.typ
-  - src/components/bibliography.typ
+  # - src/components/bibliography.typ
   - src/theme/page.typ
   - src/theme/typography.typ
   - src/theme/colors.typ
