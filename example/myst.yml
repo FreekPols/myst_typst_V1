@@ -20,7 +20,7 @@ project:
   license: CC-BY-4.0
   doi: null
   bibliography:
-    - references.bib
+    - reference.bib
 
   toc:
     - file: content/index.md
