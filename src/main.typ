@@ -19,6 +19,8 @@
 #import "theme/colors.typ": default_text_color, default_heading_color
 #import "theme/spacing.typ": default_line_spacing, default_par_spacing
 
+
+
 #let require_non_empty(value, field_name, fallback: none) = {
   if value == none or value == "" {
     if fallback != none {
@@ -153,6 +155,7 @@
         }
       }
     }
+
     output
   }
 }
@@ -248,10 +251,6 @@
 
   show raw: set text(font: font_mono, size: font_size_pt - 1pt)
 
-  configure_headings(default_heading_color)
-  configure_figures()
-  configure_tables()
-
   if show_cover_full {
     cover_page(
       resolved_title,
@@ -345,5 +344,8 @@
 
   counter(page).update(1)
 
-  [#body]
+  show: body => configure_headings(default_heading_color, body)
+  show: body => configure_figures(body)
+  show: body => configure_tables(body)
+  body
 }
